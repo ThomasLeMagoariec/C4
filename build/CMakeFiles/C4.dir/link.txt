@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/C4.dir/src/main.cpp.o -o C4 

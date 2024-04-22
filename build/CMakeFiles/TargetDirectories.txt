@@ -1,0 +1,3 @@
+/home/thomas/Documents/_coding/C4/build/CMakeFiles/C4.dir
+/home/thomas/Documents/_coding/C4/build/CMakeFiles/edit_cache.dir
+/home/thomas/Documents/_coding/C4/build/CMakeFiles/rebuild_cache.dir
