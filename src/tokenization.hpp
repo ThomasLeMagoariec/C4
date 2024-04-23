@@ -6,7 +6,12 @@
 enum class TokenType {
     exit,
     int_lit,
-    semi
+    semi,
+    open_paren,
+    close_paren,
+    ident,
+    var,
+    equal
 };
 
 struct Token {
@@ -37,9 +42,14 @@ public:
                     tokens.push_back({.type = TokenType::exit});
                     buffer.clear();
                     continue;
+                } else if (buffer == "var") {
+                    tokens.push_back({.type = TokenType::var});
+                    buffer.clear();
+                    continue;
                 } else {
-                    std::cerr << "Unknown token: " << buffer << std::endl;
-                    exit(EXIT_FAILURE);
+                    tokens.push_back({.type = TokenType::ident, .value = buffer});
+                    buffer.clear();
+                    continue;
                 }
             } else if (std::isdigit(peek().value())) {
                 buffer.push_back(consume());
@@ -52,9 +62,22 @@ public:
                 buffer.clear();
                 continue;
 
+            } else if (peek().value() == '(') {
+                consume();
+                tokens.push_back({.type = TokenType::open_paren});
+                continue;
+            } else if (peek().value() == ')') {
+                consume();
+                tokens.push_back({.type = TokenType::close_paren});
+                continue;
             } else if (peek().value() == ';') {
                 consume();
                 tokens.push_back({.type = TokenType::semi});
+                continue;
+
+            }else if (peek().value() == '=') {
+                consume();
+                tokens.push_back({.type = TokenType::equal});
                 continue;
 
             } else if (std::isspace(peek().value())) {
@@ -73,11 +96,11 @@ public:
         const std::string m_src;
         size_t m_index = 0;
 
-        [[nodiscard]] inline std::optional<char> peek(int ahead = 1) const {
-            if (m_index + ahead > m_src.length()) {
+        [[nodiscard]] inline std::optional<char> peek(int offset = 0) const {
+            if (m_index + offset >= m_src.length()) {
                 return {};
             } else {
-                return m_src.at(m_index);
+                return m_src.at(m_index + offset);
             }
         }
 

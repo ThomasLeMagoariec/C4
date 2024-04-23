@@ -1,1 +1,3 @@
-exit 2;
+var x = 69;
+var y = 17;
+exit(y);

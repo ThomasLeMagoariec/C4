@@ -1,9 +1,23 @@
 $$
 
 \begin{align}
-[\text{exit}] &\to exit([\text{expr}]);
+[\text{prog}] &\to [\text{stmt}]^*
 \\
-[\text{expr}] &\to \text{int\_lit}
+[\text{stmt}] &\to 
+\begin{cases}
+    \text{exit}([\text{expr}]);
+    \\
+    \text{var}\space\text{ident} = [\text{expr}];
+
+\end{cases}
+
+\\
+[\text{expr}] &\to
+\begin{cases}
+    \text{int\_lit}
+    \\
+    \text{indent}
+\end{cases}
 
 \end{align}
 $$
